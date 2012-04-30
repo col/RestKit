@@ -87,6 +87,9 @@ RKLogDebug(@"Failed to find instance of '%@' to connect relationship '%@' with p
         }
         RKLogTrace(@"setValue of %@ forKeyPath %@", relatedObject, relationshipName);
         [self.destinationObject setValue:relatedObject forKeyPath:relationshipName];
+		if ([self.delegate respondsToSelector:@selector(objectMappingOperation:didSetValue:forKeyPath:usingMapping:)]) {
+            [self.delegate objectMappingOperation:self didSetValue:relatedObject forKeyPath:relationshipName usingMapping:relationshipMapping];
+        }        
     } else {
         RKLogTrace(@"Failed to find primary key value for attribute '%@'", primaryKeyAttribute);
     }
